@@ -71,6 +71,7 @@
 .player__icon_next:hover,
 .player__icon_like:hover {
     border: 1px solid;
+    transform: scale(1.4);
 }
 
 .player__progress-wrap{
