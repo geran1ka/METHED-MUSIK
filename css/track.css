@@ -13,7 +13,8 @@
     transition: background-color 0.3s ease-in-out;
 }
 
-.track__img-wrap {
+.track__img-wrap,
+.track__img-wrap-play {
     position: relative;
     border-radius: 12px 12px 0px 0px;
     overflow: hidden;
@@ -69,6 +70,10 @@
     background-image: url('../img/pause.svg');
     transition-property: background-color;
     opacity: 1;
+}
+
+.track_pause .track__img-wrap::after {
+    background-image: url('../img/play.svg');
 }
 
 .track_active:hover .track__img-wrap::after {

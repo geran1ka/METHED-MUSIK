@@ -51,7 +51,9 @@
 .player__icon_pause {
     background-image: url('../img/pause.svg');
 }
-
+.player__icon_play {
+    background-image: url('../img/play.svg');  
+}
 .player__icon_next {
     background-image: url('../img/next.svg');
 }
@@ -61,13 +63,11 @@
 }
 
 
-
-
-
 .player__icon:hover,
 .player__icon_stop:hover,
 .player__icon_prev:hover,
 .player__icon_pause:hover,
+.player__icon_play:hover,
 .player__icon_next:hover,
 .player__icon_like:hover {
     border: 1px solid;
