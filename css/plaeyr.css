@@ -37,7 +37,8 @@
     background-position: center;
     background-repeat: no-repeat;
     border: 1px solid transparent;
-    transition: 0.3s ease-in-out;
+    transition: 0.3s ease-in-out; 
+    border-radius: 4px;
 }
 
 .player__icon_stop {
@@ -63,13 +64,13 @@
 }
 
 
-.player__icon:hover,
-.player__icon_stop:hover,
-.player__icon_prev:hover,
-.player__icon_pause:hover,
-.player__icon_play:hover,
-.player__icon_next:hover,
-.player__icon_like:hover {
+.player__icon:focus,
+.player__icon_stop:focus,
+.player__icon_prev:focus,
+.player__icon_pause:focus,
+.player__icon_play:focus,
+.player__icon_next:focus,
+.player__icon_like:focus {
     border: 1px solid;
     transform: scale(1.4);
 }
