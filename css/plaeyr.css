@@ -64,17 +64,17 @@
 }
 
 .player__icon_like_active {
-    filter: drop-shadow(0 0 2px tomato);
+    background-image: url('../img/like-black.svg');
 }
 
 
-.player__icon:focus,
-.player__icon_stop:focus,
-.player__icon_prev:focus,
-.player__icon_pause:focus,
-.player__icon_play:focus,
-.player__icon_next:focus,
-.player__icon_like:focus {
+.player__icon:hover,
+.player__icon_stop:hover,
+.player__icon_prev:hover,
+.player__icon_pause:hover,
+.player__icon_play:hover,
+.player__icon_next:hover,
+.player__icon_like:hover {
     border: 1px solid;
     transform: scale(1.4);
 }
