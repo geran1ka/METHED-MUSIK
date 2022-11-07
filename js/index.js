@@ -242,9 +242,7 @@ const renderCatalog = (dataList) => {
 
 const checkCount = (catalogAddBtn, i = 1) => {
     
-    if (tracksCard[0] === undefined) {
-        return;
-    } else {
+    if (tracksCard[0]) {
         if (catalogContainer.clientHeight + 20 > tracksCard[0].clientHeight * 3) {
             tracksCard[tracksCard.length - i].style.display = 'none';
             checkCount(catalogAddBtn, i + 1);
