@@ -1,3 +1,4 @@
+{
 const API_URL = 'http://localhost:3024/';
 function throttle(callee, timeout) {
     let timer = null;
@@ -127,14 +128,7 @@ const playerVolumeInput = document.querySelector('.player__volume-input');
 
 const search = document.querySelector('.search');
 
-const catalogAddBtn = document.createElement('button');
-catalogAddBtn.classList.add('catalog__btn-add');
-catalogAddBtn.innerHTML = `
-    <span>Увидеть все</span>
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
-    </svg>
-`;
+
 
 const pausePlayer = () => {
     const trackActive = document.querySelector('.track_active')
@@ -209,22 +203,6 @@ const addHandlerTrack = () => {
 };
 
 
-pauseBtn.addEventListener('click', pausePlayer);
-
-stopBtn.addEventListener('click', () => {
-    audio.src = '';
-    player.classList.remove('player_active');
-    if (document.querySelector('.track_active')) {
-        document.querySelector('.track_active').classList.remove('track_active');
-    }
-    
-
-    /*
-    for (let i = 0; i < tracksCard.length; i++) {
-        tracksCard[i].classList.remove('track_active');
-    };*/
-});
-
 const createCard = (data) => {
     const card = document.createElement('a');
     card.href = '#';
@@ -262,14 +240,19 @@ const renderCatalog = (dataList) => {
     addHandlerTrack();
 }
 
-const checkCount = (i = 1) => {
-    tracksCard[0];
-    if (catalogContainer.clientHeight + 20 > tracksCard[0].clientHeight * 3) {
-        tracksCard[tracksCard.length - i].style.display = 'none';
-        checkCount(i + 1);
-    } else if (i !== 1) {
-        catalogContainer.append(catalogAddBtn);
-    }
+const checkCount = (catalogAddBtn, i = 1) => {
+    
+    if (tracksCard[0] === undefined) {
+        return;
+    } else {
+        if (catalogContainer.clientHeight + 20 > tracksCard[0].clientHeight * 3) {
+            tracksCard[tracksCard.length - i].style.display = 'none';
+            checkCount(catalogAddBtn, i + 1);
+        } else if (i !== 1) {
+            catalogContainer.append(catalogAddBtn);
+        }
+    };
+    
 }
 
 const updateTime = () => {
@@ -289,13 +272,22 @@ const updateTime = () => {
 };
 
 const init = async () => {
+    const catalogAddBtn = document.createElement('button');
+    catalogAddBtn.classList.add('catalog__btn-add');
+    catalogAddBtn.innerHTML = `
+        <span>Увидеть все</span>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M8.59 16.59L13.17 12L8.59 7.41L10 6L16 12L10 18L8.59 16.59Z"/>
+        </svg>
+    `;
+
     audio.volume = localStorage.getItem('volume') || 1;
     playerVolumeInput.value = audio.volume * 100;
 
     dataMusic = await fetch(`${API_URL}api/music`).then((data) => data.json());
 
     renderCatalog(dataMusic);
-    checkCount();
+    checkCount(catalogAddBtn);
 
     catalogAddBtn.addEventListener('click', () => {
         [...tracksCard].forEach((trackCard) => {
@@ -319,7 +311,7 @@ const updateTimeThrotle = throttle(updateTime)
     favoriteBtn.addEventListener('click', () => {
         const data = dataMusic.filter((item) => favoritList.includes(item.id));
         renderCatalog(data);
-        checkCount();
+        checkCount(catalogAddBtn);
 
         /*при переключении в фаворит лист если трек который не находится 
         в фаворит листе поставлен на паузу или играет сыпятся ошибки в 
@@ -331,7 +323,7 @@ const updateTimeThrotle = throttle(updateTime)
 
     headerLogo.addEventListener('click', () => {
         renderCatalog(dataMusic);
-        checkCount();
+        checkCount(catalogAddBtn);
     });
 
     likeBtn.addEventListener('click', () => {
@@ -363,15 +355,31 @@ const updateTimeThrotle = throttle(updateTime)
 
         }
     });
+
+    pauseBtn.addEventListener('click', pausePlayer);
+
+stopBtn.addEventListener('click', () => {
+    audio.src = '';
+    player.classList.remove('player_active');
+    if (document.querySelector('.track_active')) {
+        document.querySelector('.track_active').classList.remove('track_active');
+    }
+    
+
+    /*
+    for (let i = 0; i < tracksCard.length; i++) {
+        tracksCard[i].classList.remove('track_active');
+    };*/
+});
     search.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         playlist = await fetch(`${API_URL}api/music?search=${search.search.value}`).then((data) => data.json());
 
         renderCatalog(playlist);
-        checkCount();
+        checkCount(catalogAddBtn);
     })
 };
 
 init();
-
+}
